@@ -151,7 +151,7 @@ void FakeTest(SYSTEM_STATE* state) {
 
 
 void CardOnAarduino(SYSTEM_STATE* state){
-	SerialWritePort(state->port, "4", sizeof(char));
+	SerialWritePort(state->port, "<LIST>", strlen("<LIST>"));
 	char buf[50];
 	SerialReadPort(state->port, &buf, 50);
 	printf("%s", buf);
@@ -165,7 +165,7 @@ void Huvudmeny(SYSTEM_STATE* state)
 	while (true)
 	{
 		printf("\n***ADMIN MENY***\n");
-		printf("1. Remote open door\n2. List all cards in system\n3. Add/remove access\n4. Exit\n5. FAKE TEST SCAN\n6. Cards on Arduino");
+		printf("1. Remote open door\n2. List all cards in system\n3. Add/remove access\n4. Exit\n5. FAKE TEST SCAN\n6. Cards on Arduino\n7. Clear list on Arduino");
 		int selection = 0;
 		if (!GetInputInt("\nAnge val:>", &selection))
 			continue;
@@ -193,9 +193,10 @@ void Huvudmeny(SYSTEM_STATE* state)
 			break;
 		case 6:
 			system("cls");
-			
 			CardOnAarduino(state);
-
+		case 7:
+			system("cls");
+			SerialWritePort(state->port, "<CLEAR>", strlen("<CLEAR>"));
 
 		}
 

@@ -26,7 +26,13 @@ void Test(String testCard) {
 	digitalWrite(3, LOW);
 	return;
 }
-
+void ClearList() {
+	for (int i = 0; i < 10; i++) {
+		allCard[i] = "";
+	}
+	index = 0;
+	return;
+}
 void loop() {
 	while (Serial.available()) {
 		String inData = Serial.readStringUntil('>');
@@ -50,14 +56,18 @@ void loop() {
 
 		}
 
-		else if (inData == "4") {
+		else if (inData.startsWith("<LIST")) {
 			Serial.println(index);
 			for (int i = 0; i < 10; i++) {
 				Serial.println(allCard[i]);
 
 			}
 		}
+		else if (inData.startsWith("<CLEAR")) {
+			ClearList();
+		}
 	}
 	return;
 }
 
+	
